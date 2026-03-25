@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Admin Panel | Prime Heritage Trust</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .admin-container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    .admin-header {
+      background: linear-gradient(135deg, #0A2540, #1F4A6E);
+      padding: 24px;
+      border-radius: 28px;
+      color: white;
+      margin-bottom: 24px;
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .stat-card {
+      background: var(--bg-card);
+      padding: 20px;
+      border-radius: 20px;
+      text-align: center;
+      box-shadow: var(--shadow);
+    }
+    .stat-number {
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--accent);
+    }
+    .admin-section {
+      background: var(--bg-card);
+      border-radius: 24px;
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow);
+    }
+    .bbc-codes-box {
+      background: rgba(245, 166, 35, 0.1);
+      border-radius: 16px;
+      padding: 16px;
+      margin-top: 16px;
+    }
+    .bbc-code {
+      font-family: monospace;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--accent);
+      margin: 8px 0;
+      letter-spacing: 2px;
+    }
+    .user-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px;
+      border-bottom: 1px solid var(--border);
+      transition: 0.3s;
+    }
+    .user-item:hover {
+      background: rgba(245, 166, 35, 0.05);
+    }
+    .user-info h4 {
+      margin-bottom: 4px;
+    }
+    .user-info p {
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+    .btn-small {
+      background: var(--accent);
+      color: #0A2540;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+    .btn-small:hover {
+      background: var(--accent-hover);
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body>
+  <div class="admin-container">
+    <div class="admin-header">
+      <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+        <i class="fas fa-crown" style="font-size: 32px; color: var(--accent);"></i>
+        <h2>Admin Control Panel</h2>
+      </div>
+      <p style="opacity: 0.8;">BBC Code Management • User Control • System Overview</p>
+    </div>
+
+    <div class="stats-grid" id="statsGrid">
+      <div class="stat-card">
+        <i class="fas fa-users" style="font-size: 28px; color: var(--accent);"></i>
+        <div class="stat-number" id="totalUsers">0</div>
+        <p>Total Users</p>
+      </div>
+      <div class="stat-card">
+        <i class="fas fa-credit-card" style="font-size: 28px; color: var(--accent);"></i>
+        <div class="stat-number" id="totalCards">0</div>
+        <p>Cards Issued</p>
+      </div>
+      <div class="stat-card">
+        <i class="fas fa-chart-line" style="font-size: 28px; color: var(--accent);"></i>
+        <div class="stat-number" id="totalVolume">$0</div>
+        <p>Total Volume</p>
+      </div>
+    </div>
+
+    <div class="admin-section">
+      <h3><i class="fas fa-paper-plane"></i> Send Money to Any User</h3>
+      <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 16px;">No BBC code required - Admin privilege</p>
+      <input type="text" id="adminRecipient" placeholder="Recipient Email" style="width: 100%; padding: 14px; border: 1px solid var(--border); border-radius: 16px; margin-bottom: 12px;">
+      <input type="number" id="adminAmount" placeholder="Amount" style="width: 100%; padding: 14px; border: 1px solid var(--border); border-radius: 16px; margin-bottom: 12px;">
+      <select id="adminCurrency" style="width: 100%; padding: 14px; border: 1px solid var(--border); border-radius: 16px; margin-bottom: 12px;">
+        <option value="USD">USD - US Dollar</option>
+        <option value="EUR">EUR - Euro</option>
+        <option value="GBP">GBP - British Pound</option>
+      </select>
+      <input type="text" id="adminNote" placeholder="Note (appears in user's history)" style="width: 100%; padding: 14px; border: 1px solid var(--border); border-radius: 16px; margin-bottom: 16px;">
+      <button onclick="adminSendMoney()" class="btn-small" style="width: 100%; padding: 14px;">Send Money</button>
+    </div>
+
+    <div class="admin-section">
+      <h3><i class="fas fa-shield-alt"></i> BBC Codes (Only You Know)</h3>
+      <div class="bbc-codes-box">
+        <p><strong>🔐 TRANSFER BBC CODES:</strong></p>
+        <div class="bbc-code">PRI-7821-XK</div>
+        <div class="bbc-code">SEC-3945-MN</div>
+        <div class="bbc-code">FIN-6723-PQ</div>
+        <hr style="margin: 12px 0; border-color: var(--border);">
+        <p><strong>💳 CARD PURCHASE BBC CODES:</strong></p>
+        <div class="bbc-code">PRI-8642-GH</div>
+        <div class="bbc-code">SEC-9753-IJ</div>
+        <div class="bbc-code">FIN-6428-KL</div>
+        <hr style="margin: 12px 0; border-color: var(--border);">
+        <p><strong>💡 BILL PAYMENT BBC CODES:</strong></p>
+        <div class="bbc-code">PRI-3214-MN</div>
+        <div class="bbc-code">SEC-5432-OP</div>
+        <div class="bbc-code">FIN-7654-QR</div>
+      </div>
+      <p style="margin-top: 16px; font-size: 12px; color: var(--text-secondary);">
+        <i class="fas fa-info-circle"></i> Users must contact you to get these codes for their transactions
+      </p>
+    </div>
+
+    <div class="admin-section">
+      <h3><i class="fas fa-users"></i> All Users</h3>
+      <div id="userList" style="max-height: 400px; overflow-y: auto;"></div>
+    </div>
+  </div>
+
+  <script>
+    let token = null;
+    const API_URL = window.location.hostname === 'localhost' ? 'http://localhost:3000/api' : '/api';
+
+    function showToast(message, type = 'success') {
+      const toast = document.createElement('div');
+      toast.className = `toast ${type}`;
+      toast.innerHTML = `<i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i> ${message}`;
+      document.body.appendChild(toast);
+      setTimeout(() => toast.remove(), 3000);
+    }
+
+    async function loadAdminData() {
+      try {
+        const usersRes = await fetch(`${API_URL}/admin/users`);
+        const users = await usersRes.json();
+        
+        const statsRes = await fetch(`${API_URL}/admin/stats`);
+        const stats = await statsRes.json();
+        
+        document.getElementById('totalUsers').innerText = stats.totalUsers || users.length;
+        document.getElementById('totalCards').innerText = stats.totalCards || 0;
+        
+        const totalVolume = users.reduce((sum, u) => sum + u.balance, 0);
+        document.getElementById('totalVolume').innerText = `$${totalVolume.toLocaleString()}`;
+        
+        const userList = document.getElementById('userList');
+        const regularUsers = users.filter(u => !u.isAdmin);
+        
+        if (regularUsers.length === 0) {
+          userList.innerHTML = '<div style="text-align: center; padding: 40px;">No users yet</div>';
+          return;
+        }
+        
+        userList.innerHTML = regularUsers.map(u => `
+          <div class="user-item">
+            <div class="user-info">
+              <h4>${u.fullName}</h4>
+              <p>${u.email} | Balance: ${u.currency === 'USD' ? '$' : (u.currency === 'EUR' ? '€' : '£')}${u.balance.toLocaleString()}</p>
+              <p style="font-size: 10px;">Joined: ${new Date(u.createdAt).toLocaleDateString()}</p>
+            </div>
+            <button onclick="quickSend('${u.email}')" class="btn-small">Send</button>
+          </div>
+        `).join('');
+      } catch (error) {
+        console.error('Error loading admin data:', error);
+      }
+    }
+
+    async function adminSendMoney() {
+      const recipient = document.getElementById('adminRecipient').value;
+      const amount = parseFloat(document.getElementById('adminAmount').value);
+      const currency = document.getElementById('adminCurrency').value;
+      const note = document.getElementById('adminNote').value || 'Bank Credit';
+      
+      if (!recipient || !amount || amount <= 0) {
+        showToast('Please enter recipient and valid amount', 'error');
+        return;
+      }
+      
+      try {
+        const response = await fetch(`${API_URL}/admin/send-money`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ recipientEmail: recipient, amount, note })
+        });
+        
+        const data = await response.json();
+        
+        if (response.ok) {
+          showToast(`✅ Sent ${currency === 'USD' ? '$' : (currency === 'EUR' ? '€' : '£')}${amount.toLocaleString()} to ${recipient}`);
+          document.getElementById('adminRecipient').value = '';
+          document.getElementById('adminAmount').value = '';
+          document.getElementById('adminNote').value = '';
+          loadAdminData();
+        } else {
+          showToast(data.error, 'error');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        showToast('Failed to send money', 'error');
+      }
+    }
+
+    function quickSend(email) {
+      document.getElementById('adminRecipient').value = email;
+      document.getElementById('adminAmount').focus();
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const storedUser = sessionStorage.getItem('currentUser');
+      const storedToken = sessionStorage.getItem('token');
+      
+      if (!storedUser || !storedToken) {
+        window.location.href = 'login.html';
+        return;
+      }
+      
+      const user = JSON.parse(storedUser);
+      if (!user.isAdmin) {
+        window.location.href = 'dashboard.html';
+        return;
+      }
+      
+      token = storedToken;
+      loadAdminData();
+    });
+    
+    window.adminSendMoney = adminSendMoney;
+    window.quickSend = quickSend;
+  </script>
+</body>
+</html>
