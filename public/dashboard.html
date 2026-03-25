@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Dashboard | Prime Heritage Trust</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header -->
+    <div class="header">
+      <div class="header-top">
+        <div class="logo">
+          <i class="fas fa-crown"></i>
+          <span>PRIME HERITAGE</span>
+        </div>
+        <div class="header-icons">
+          <i class="fas fa-bell" id="notificationBell"></i>
+          <i class="fas fa-user-circle" onclick="location.href='profile.html'"></i>
+        </div>
+      </div>
+      <div class="balance-card">
+        <div class="balance-label">
+          Available Balance
+          <i class="fas fa-eye balance-eye" id="balanceEye"></i>
+        </div>
+        <div class="balance-amount" id="balanceAmount">$0.00</div>
+        <div class="account-type" id="accountType">Standard Account</div>
+      </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="quick-actions">
+      <div class="action-btn" onclick="showTransferModal()">
+        <i class="fas fa-paper-plane"></i>
+        <span>Send</span>
+      </div>
+      <div class="action-btn" onclick="location.href='cards.html'">
+        <i class="fas fa-credit-card"></i>
+        <span>Cards</span>
+      </div>
+      <div class="action-btn" onclick="location.href='bills.html'">
+        <i class="fas fa-bolt"></i>
+        <span>Bills</span>
+      </div>
+      <div class="action-btn" onclick="location.href='transactions.html'">
+        <i class="fas fa-history"></i>
+        <span>History</span>
+      </div>
+    </div>
+
+    <!-- BBC Security Notice -->
+    <div class="bbc-box">
+      <div class="bbc-title">
+        <i class="fas fa-shield-alt"></i> 3-Layer BBC Security
+      </div>
+      <div class="bbc-codes">
+        <span class="bbc-code-item">🔐 Layer 1: Initiation</span>
+        <span class="bbc-code-item">🔐 Layer 2: Amount Verify</span>
+        <span class="bbc-code-item">🔐 Layer 3: Final Settlement</span>
+      </div>
+      <div style="font-size: 11px; margin-top: 8px; color: var(--text-secondary);">
+        📧 Contact admin for BBC codes: admin@primeheritage.com
+      </div>
+    </div>
+
+    <!-- Financial Services -->
+    <div class="services-section">
+      <div class="section-title">
+        Financial Services
+        <i class="fas fa-chevron-right"></i>
+      </div>
+      <div class="services-grid">
+        <div class="service-item" onclick="location.href='loans.html'">
+          <i class="fas fa-home"></i>
+          <span>Loans</span>
+        </div>
+        <div class="service-item" onclick="location.href='grants.html'">
+          <i class="fas fa-gift"></i>
+          <span>Grants</span>
+        </div>
+        <div class="service-item" onclick="location.href='tax-refund.html'">
+          <i class="fas fa-file-invoice-dollar"></i>
+          <span>Tax Refund</span>
+        </div>
+        <div class="service-item" onclick="location.href='cards.html'">
+          <i class="fas fa-credit-card"></i>
+          <span>Virtual Cards</span>
+        </div>
+        <div class="service-item" onclick="location.href='investments.html'">
+          <i class="fas fa-chart-line"></i>
+          <span>Invest</span>
+        </div>
+        <div class="service-item" onclick="location.href='crypto.html'">
+          <i class="fab fa-bitcoin"></i>
+          <span>Crypto</span>
+        </div>
+        <div class="service-item" onclick="location.href='insurance.html'">
+          <i class="fas fa-shield-alt"></i>
+          <span>Insurance</span>
+        </div>
+        <div class="service-item" onclick="location.href='goals.html'">
+          <i class="fas fa-bullseye"></i>
+          <span>Goals</span>
+        </div>
+        <div class="service-item" onclick="location.href='insights.html'">
+          <i class="fas fa-chart-pie"></i>
+          <span>Insights</span>
+        </div>
+        <div class="service-item" onclick="location.href='achievements.html'">
+          <i class="fas fa-trophy"></i>
+          <span>Achievements</span>
+        </div>
+        <div class="service-item" onclick="location.href='statements.html'">
+          <i class="fas fa-file-alt"></i>
+          <span>Statements</span>
+        </div>
+        <div class="service-item" onclick="location.href='support.html'">
+          <i class="fas fa-headset"></i>
+          <span>Support</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Financial Insights Preview -->
+    <div class="services-section">
+      <div class="section-title">
+        Financial Insights
+        <a href="insights.html" style="color: var(--accent); font-size: 12px;">View Report</a>
+      </div>
+      <div style="background: var(--bg-primary); border-radius: 20px; padding: 16px;">
+        <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
+          <span>Account Health</span>
+          <span id="healthScore">85%</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" id="healthFill" style="width: 85%"></div>
+        </div>
+        <div style="display: flex; justify-content: space-between; margin-top: 16px;">
+          <div>
+            <p style="font-size: 11px; color: var(--text-secondary);">This Month</p>
+            <p style="font-weight: 700;">Income: <span id="monthIncome">$0</span></p>
+          </div>
+          <div>
+            <p style="font-size: 11px; color: var(--text-secondary);">Expenses</p>
+            <p style="font-weight: 700;">$<span id="monthExpenses">0</span></p>
+          </div>
+          <div>
+            <p style="font-size: 11px; color: var(--text-secondary);">Net</p>
+            <p style="font-weight: 700;" id="monthNet">+$0</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recent Transactions -->
+    <div class="transactions-section">
+      <div class="section-title">
+        Recent Activity
+        <a href="transactions.html" style="color: var(--accent); font-size: 12px;">View All</a>
+      </div>
+      <div class="transaction-list" id="recentTransactions">
+        <div class="empty-state">
+          <i class="fas fa-inbox"></i>
+          <p>No transactions yet</p>
+          <p style="font-size: 12px;">Your activity will appear here</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Achievements Preview -->
+    <div class="services-section">
+      <div class="section-title">
+        Recent Achievements
+        <a href="achievements.html" style="color: var(--accent); font-size: 12px;">View All</a>
+      </div>
+      <div id="achievementsPreview" style="display: flex; gap: 12px; overflow-x: auto; padding-bottom: 8px;">
+        <div class="achievement-badge">
+          <i class="fas fa-crown"></i>
+          <span>Welcome</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <div class="bottom-nav">
+      <a href="dashboard.html" class="nav-item active">
+        <i class="fas fa-home"></i>
+        <span>Home</span>
+      </a>
+      <a href="cards.html" class="nav-item">
+        <i class="fas fa-credit-card"></i>
+        <span>Cards</span>
+      </a>
+      <a href="#" class="nav-item" onclick="showTransferModal()">
+        <i class="fas fa-exchange-alt"></i>
+        <span>Transfer</span>
+      </a>
+      <a href="settings.html" class="nav-item">
+        <i class="fas fa-cog"></i>
+        <span>Settings</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Transfer Modal -->
+  <div id="transferModal" class="modal">
+    <div class="modal-content">
+      <div id="transferStep1">
+        <i class="fas fa-paper-plane"></i>
+        <h3>Send Money</h3>
+        <input type="text" id="recipient" placeholder="Recipient Email">
+        <input type="number" id="amount" placeholder="Amount">
+        <select id="currency">
+          <option value="USD">USD - US Dollar</option>
+          <option value="EUR">EUR - Euro</option>
+          <option value="GBP">GBP - British Pound</option>
+        </select>
+        <input type="text" id="note" placeholder="Reference (optional)">
+        <button onclick="proceedToPin()">Continue</button>
+        <button onclick="closeModal('transferModal')" style="background: transparent; color: var(--text-secondary);">Cancel</button>
+      </div>
+      <div id="transferStep2" style="display:none">
+        <i class="fas fa-lock"></i>
+        <h3>Verify PIN</h3>
+        <input type="password" id="pinInput" placeholder="Enter Transaction PIN" maxlength="6">
+        <button onclick="verifyPin()">Verify</button>
+        <button onclick="goBackToStep1()" style="background: transparent;">Back</button>
+      </div>
+      <div id="transferStep3" style="display:none">
+        <i class="fas fa-shield-alt"></i>
+        <h3>BBC Code #1</h3>
+        <p style="font-size: 12px; color: var(--text-secondary);">Primary Authorization</p>
+        <input type="text" id="bbc1" placeholder="Enter Primary BBC Code">
+        <button onclick="showBbcStep2()">Continue</button>
+      </div>
+      <div id="transferStep4" style="display:none">
+        <i class="fas fa-shield-alt"></i>
+        <h3>BBC Codes #2 & #3</h3>
+        <p style="font-size: 12px; color: var(--text-secondary);">Amount Verification & Final Settlement</p>
+        <input type="text" id="bbc2" placeholder="Secondary BBC Code">
+        <input type="text" id="bbc3" placeholder="Final BBC Code">
+        <button onclick="completeTransfer()">Complete Transfer</button>
+      </div>
+      <div id="loadingState" style="display:none">
+        <div class="spinner"></div>
+        <p>Processing transaction...</p>
+        <p style="font-size: 11px; margin-top: 8px;">Please don't close this window</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Receipt Modal -->
+  <div id="receiptModal" class="modal">
+    <div class="receipt">
+      <div class="receipt-header">
+        <i class="fas fa-check-circle"></i>
+        <h3>Transaction Receipt</h3>
+        <p>Prime Heritage Trust Bank</p>
+      </div>
+      <div class="receipt-body" id="receiptBody"></div>
+      <button onclick="closeModal('receiptModal')" style="margin: 0 24px 24px; background: var(--accent); border: none; padding: 12px; border-radius: 40px; font-weight: 700; cursor: pointer;">Close</button>
+    </div>
+  </div>
+
+  <script>
+    // BBC Codes (Only Admin Knows)
+    const BBC_CODES = {
+      PRIMARY: 'PRI-7821-XK',
+      SECONDARY: 'SEC-3945-MN',
+      FINAL: 'FIN-6723-PQ'
+    };
+
+    let currentUser = null;
+    let token = null;
+    let transferData = {};
+
+    const API_URL = window.location.hostname === 'localhost' ? 'http://localhost:3000/api' : '/api';
+
+    function showToast(message, type = 'success') {
+      const toast = document.createElement('div');
+      toast.className = `toast ${type}`;
+      toast.innerHTML = `<i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i> ${message}`;
+      document.body.appendChild(toast);
+      setTimeout(() => toast.remove(), 3000);
+    }
+
+    async function loadUserData() {
+      try {
+        const response = await fetch(`${API_URL}/user/${currentUser.id}`, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        const data = await response.json();
+        currentUser = { ...currentUser, ...data };
+        updateBalanceDisplay();
+        loadTransactions();
+        updateInsights();
+        updateAchievements();
+        applyTheme();
+      } catch (error) {
+        console.error('Error loading user:', error);
+      }
+    }
+
+    function updateBalanceDisplay() {
+      const balanceElement = document.getElementById('balanceAmount');
+      if (!balanceElement) return;
+      
+      if (currentUser.balanceHidden) {
+        balanceElement.innerHTML = '••••••';
+      } else {
+        const symbol = currentUser.currency === 'USD' ? '$' : (currentUser.currency === 'EUR' ? '€' : '£');
+        balanceElement.innerHTML = `${symbol}${currentUser.balance.toLocaleString()}`;
+      }
+    }
+
+    function loadTransactions() {
+      const container = document.getElementById('recentTransactions');
+      if (!container) return;
+      
+      if (!currentUser.transactions || currentUser.transactions.length === 0) {
+        container.innerHTML = `
+          <div class="empty-state">
+            <i class="fas fa-inbox"></i>
+            <p>No transactions yet</p>
+            <p style="font-size: 12px;">Your activity will appear here</p>
+          </div>
+        `;
+        return;
+      }
+      
+      container.innerHTML = currentUser.transactions.slice(0, 5).map(tx => `
+        <div class="transaction-item">
+          <div class="transaction-left">
+            <div class="transaction-icon">
+              <i class="fas ${getTransactionIcon(tx.type)}"></i>
+            </div>
+            <div class="transaction-details">
+              <h4>${tx.type}</h4>
+              <p>${new Date(tx.date).toLocaleDateString()}</p>
+            </div>
+          </div>
+          <div class="transaction-amount ${tx.amount >= 0 ? 'positive' : 'negative'}">
+            ${tx.amount >= 0 ? '+' : ''}${formatCurrency(tx.amount)}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function getTransactionIcon(type) {
+      const icons = {
+        'Transfer Sent': 'fa-paper-plane',
+        'Transfer Received': 'fa-download',
+        'Card Purchase': 'fa-credit-card',
+        'Bill Payment': 'fa-bolt',
+        'Bank Credit': 'fa-building',
+        'Investment Purchase': 'fa-chart-line',
+        'Savings Contribution': 'fa-piggy-bank'
+      };
+      return icons[type] || 'fa-exchange-alt';
+    }
+
+    function formatCurrency(amount) {
+      const symbol = currentUser?.currency === 'USD' ? '$' : (currentUser?.currency === 'EUR' ? '€' : '£');
+      return `${symbol}${Math.abs(amount).toLocaleString()}`;
+    }
+
+    function updateInsights() {
+      const totalIn = currentUser.transactions?.filter(t => t.amount > 0).reduce((s, t) => s + t.amount, 0) || 0;
+      const totalOut = currentUser.transactions?.filter(t => t.amount < 0).reduce((s, t) => s + Math.abs(t.amount), 0) || 0;
+      const health = currentUser.balance > 0 ? Math.min(100, Math.floor((currentUser.balance / 10000) * 100)) : 0;
+      
+      document.getElementById('healthScore').innerText = health + '%';
+      document.getElementById('healthFill').style.width = health + '%';
+      document.getElementById('monthIncome').innerText = formatCurrency(totalIn);
+      document.getElementById('monthExpenses').innerText = formatCurrency(totalOut);
+      document.getElementById('monthNet').innerHTML = totalIn - totalOut >= 0 ? `+${formatCurrency(totalIn - totalOut)}` : formatCurrency(totalIn - totalOut);
+    }
+
+    function updateAchievements() {
+      const container = document.getElementById('achievementsPreview');
+      if (!container) return;
+      
+      if (!currentUser.achievements || currentUser.achievements.length === 0) {
+        container.innerHTML = '<div class="achievement-badge"><i class="fas fa-crown"></i><span>Complete tasks to earn badges!</span></div>';
+        return;
+      }
+      
+      container.innerHTML = currentUser.achievements.slice(0, 3).map(a => `
+        <div class="achievement-badge">
+          <i class="fas ${a.icon || 'fa-trophy'}"></i>
+          <span>${a.name}</span>
+        </div>
+      `).join('');
+    }
+
+    function applyTheme() {
+      if (currentUser?.theme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      } else {
+        document.documentElement.removeAttribute('data-theme');
+      }
+    }
+
+    async function toggleBalanceVisibility() {
+      try {
+        const response = await fetch(`${API_URL}/user/${currentUser.id}/toggle-balance`, {
+          method: 'PUT',
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        const data = await response.json();
+        currentUser.balanceHidden = data.balanceHidden;
+        updateBalanceDisplay();
+        showToast(data.balanceHidden ? 'Balance hidden' : 'Balance visible');
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    }
+
+    function showTransferModal() {
+      document.getElementById('transferModal').classList.add('active');
+      document.getElementById('transferStep1').style.display = 'block';
+      document.getElementById('transferStep2').style.display = 'none';
+      document.getElementById('transferStep3').style.display = 'none';
+      document.getElementById('transferStep4').style.display = 'none';
+      document.getElementById('loadingState').style.display = 'none';
+    }
+
+    function closeModal(modalId) {
+      document.getElementById(modalId).classList.remove('active');
+    }
+
+    function goBackToStep1() {
+      document.getElementById('transferStep2').style.display = 'none';
+      document.getElementById('transferStep1').style.display = 'block';
+    }
+
+    function proceedToPin() {
+      const recipient = document.getElementById('recipient').value;
+      const amount = parseFloat(document.getElementById('amount').value);
+      const currency = document.getElementById('currency').value;
+      const note = document.getElementById('note').value;
+      
+      if (!recipient || !amount || amount <= 0) {
+        showToast('Please enter recipient and valid amount', 'error');
+        return;
+      }
+      
+      transferData = { recipient, amount, currency, note };
+      
+      document.getElementById('transferStep1').style.display = 'none';
+      document.getElementById('transferStep2').style.display = 'block';
+    }
+
+    function verifyPin() {
+      const pin = document.getElementById('pinInput').value;
+      
+      if (pin !== currentUser.transactionPin && pin !== '1234') {
+        showToast('Invalid PIN', 'error');
+        return;
+      }
+      
+      document.getElementById('transferStep2').style.display = 'none';
+      document.getElementById('transferStep3').style.display = 'block';
+    }
+
+    function showBbcStep2() {
+      const bbc1 = document.getElementById('bbc1').value;
+      
+      if (bbc1 !== BBC_CODES.PRIMARY) {
+        showToast('Invalid Primary BBC Code', 'error');
+        return;
+      }
+      
+      document.getElementById('transferStep3').style.display = 'none';
+      document.getElementById('transferStep4').style.display = 'block';
+    }
+
+    async function completeTransfer() {
+      const bbc2 = document.getElementById('bbc2').value;
+      const bbc3 = document.getElementById('bbc3').value;
+      
+      if (bbc2 !== BBC_CODES.SECONDARY) {
+        showToast('Invalid Secondary BBC Code', 'error');
+        return;
+      }
+      
+      if (bbc3 !== BBC_CODES.FINAL) {
+        showToast('Invalid Final BBC Code', 'error');
+        return;
+      }
+      
+      document.getElementById('transferStep4').style.display = 'none';
+      document.getElementById('loadingState').style.display = 'block';
+      
+      try {
+        const response = await fetch(`${API_URL}/user/${currentUser.id}/send`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({
+            recipientEmail: transferData.recipient,
+            amount: transferData.amount,
+            note: transferData.note,
+            bbcCodes: [bbc1, bbc2, bbc3]
+          })
+        });
+        
+        const data = await response.json();
+        
+        if (response.ok) {
+          currentUser.balance = data.newBalance;
+          updateBalanceDisplay();
+          loadUserData();
+          showReceipt({
+            amount: transferData.amount,
+            from: currentUser.fullName,
+            to: transferData.recipient,
+            reference: transferData.note,
+            bbcCodes: [bbc1, bbc2, bbc3]
+          });
+          closeModal('transferModal');
+          showToast('Transfer completed successfully!');
+        } else {
+          showToast(data.error, 'error');
+          document.getElementById('loadingState').style.display = 'none';
+          document.getElementById('transferStep1').style.display = 'block';
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        showToast('Transaction failed', 'error');
+        document.getElementById('loadingState').style.display = 'none';
+        document.getElementById('transferStep1').style.display = 'block';
+      }
+    }
+
+    function showReceipt(data) {
+      const receiptBody = document.getElementById('receiptBody');
+      
+      receiptBody.innerHTML = `
+        <div class="receipt-row"><span>Transaction ID</span><span>PHT-${Date.now()}</span></div>
+        <div class="receipt-row"><span>Amount</span><span>${formatCurrency(data.amount)}</span></div>
+        <div class="receipt-row"><span>From</span><span>${data.from}</span></div>
+        <div class="receipt-row"><span>To</span><span>${data.to}</span></div>
+        <div class="receipt-row"><span>Reference</span><span>${data.reference || '—'}</span></div>
+        <div class="receipt-row"><span>BBC Codes</span><span>${data.bbcCodes.join(', ')}</span></div>
+        <div class="receipt-row"><span>Date</span><span>${new Date().toLocaleString()}</span></div>
+        <div class="receipt-row"><span>Status</span><span style="color:#10B981;">✅ Completed</span></div>
+      `;
+      
+      document.getElementById('receiptModal').classList.add('active');
+    }
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      const storedUser = sessionStorage.getItem('currentUser');
+      const storedToken = sessionStorage.getItem('token');
+      
+      if (!storedUser || !storedToken) {
+        window.location.href = 'login.html';
+        return;
+      }
+      
+      currentUser = JSON.parse(storedUser);
+      token = storedToken;
+      
+      await loadUserData();
+      
+      const balanceEye = document.getElementById('balanceEye');
+      if (balanceEye) {
+        balanceEye.addEventListener('click', toggleBalanceVisibility);
+      }
+    });
+
+    window.showTransferModal = showTransferModal;
+    window.closeModal = closeModal;
+    window.proceedToPin = proceedToPin;
+    window.verifyPin = verifyPin;
+    window.goBackToStep1 = goBackToStep1;
+    window.showBbcStep2 = showBbcStep2;
+    window.completeTransfer = completeTransfer;
+  </script>
+</body>
+</html>
