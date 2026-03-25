@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Prime Heritage Trust Bank</title>
+    <meta http-equiv="refresh" content="0; url=/public/index.html">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #0A2540, #1F4A6E);
+            color: white;
+            margin: 0;
+        }
+        .loader {
+            text-align: center;
+        }
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(255,255,255,0.3);
+            border-top-color: #F5A623;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        a {
+            color: #F5A623;
+        }
+    </style>
+</head>
+<body>
+    <div class="loader">
+        <h1>🏦 Prime Heritage Trust Bank</h1>
+        <div class="spinner"></div>
+        <p>Redirecting to secure banking portal...</p>
+        <p>If not redirected, <a href="/public/index.html">click here</a></p>
+    </div>
+</body>
+</html>
